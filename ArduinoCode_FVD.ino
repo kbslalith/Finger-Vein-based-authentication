@@ -4,12 +4,48 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
  long duration,cm;
 const int Trig = 9;
 const int Echo = 8;
+ int n ;
 
-void setup() {
+void setup() 
+
+{
   lcd.begin(16, 2);
   Serial.begin(9600);
 }
 
+
+//** Function to Do Nothing**//
+void DoNothing()
+{
+  while(1)
+    {
+    
+    }
+
+}
+
+
+//*After Object Detected LCD Code*//
+void LCD_CameraStart()
+  {
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Please Wait");
+    for(n = 3;n>0 ;n--)
+      {
+              lcd.setCursor(0,1);
+              lcd.clear();
+              lcd.print(n);
+              delay(1000);
+      
+      }
+  lcd.print("Image Captured");
+  DoNothing();
+    
+  
+  }
+
+// ** Before Object Detected LCD Code** //
 void LCD()
 {
     if(cm<=100)
@@ -18,9 +54,10 @@ void LCD()
   delay(1000);
   lcd.print("HELLO!!,Put Your");
   lcd.setCursor(0,1);
-  delay(2000);
+  delay(1000);
   lcd.print("Finger near Cam");
   delay(1000);
+  LCD_CameraStart();
     }
 
     else
@@ -29,7 +66,6 @@ void LCD()
       }
     
 }
-  
   
   
 
@@ -51,11 +87,12 @@ void loop()
 
 
 cm = microsecondsToCentimeters(duration);
+//*** If you want to check the Distance Uncomment the Below Lines ***//
+//Serial.print(cm);
+//  Serial.print("cm");
+//  Serial.println();
 
-  Serial.print(cm);
-  Serial.print("cm");
-  Serial.println();
-  delay(100);
+delay(100);
   LCD();
     
   }
